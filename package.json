@@ -1,0 +1,33 @@
+{
+  "name": "fivem-autoupdater",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^1.6.8",
+    "corn": "^0.0.1",
+    "follow-redirects": "^1.15.6",
+    "form-data": "^4.0.0",
+    "fs-extra": "^11.2.0",
+    "graceful-fs": "^4.2.11",
+    "jsonfile": "^6.1.0",
+    "node-cron": "^3.0.3",
+    "proxy-from-env": "^1.1.0",
+    "universalify": "^2.0.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nici002018/Fivem-Autoupdater.git"
+  },
+  "author": "Niceas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nici002018/Fivem-Autoupdater/issues"
+  },
+  "homepage": "https://github.com/nici002018/Fivem-Autoupdater#readme"
+}
