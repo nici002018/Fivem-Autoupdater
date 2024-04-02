@@ -3,10 +3,10 @@ const fs = require('fs-extra');
 const path = require('path');
 const cron = require('node-cron');
 const { exec } = require('child_process');
-
+const config = require('./config.json');
 
 const ARTIFACT_FOLDER = __dirname;
-const FILTER = ["*.cfg", "*.cmd", "*.bat", "*.zip", "*.crt", "*.key", "resources", "cache", "*.tar.xz", "current-version", "*.json", "node_modules", "*.js"];
+const FILTER = config.Settings.Filter;
 
 async function getLatestRelease() {
     try {
@@ -27,7 +27,15 @@ async function getLatestRelease() {
 
         const version = tagResponse.data.tag.replace("v1.0.0.", "");
         const hash = tagResponse.data.object.sha;
-        const uri = `https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${version}-${hash}/fx.tar.xz`;
+        let uri = "";
+
+        if (config.Settings.Type.toLowerCase === "linux") {
+            uri = `https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${version}-${hash}/fx.tar.xz`;
+        }
+
+        if (config.Settings.Type.toLowerCase === "windows") {
+            uri = `https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/${version}-${hash}/server.7z`;
+        }
 
         return {
             uri,

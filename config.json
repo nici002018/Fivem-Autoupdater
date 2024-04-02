@@ -1,0 +1,6 @@
+{
+    "Settings": {
+        "Filter": ["*.cfg", "*.cmd", "*.bat", "*.zip", "*.crt", "*.key", "resources", "cache", "*.tar.xz", "current-version", "*.json", "node_modules", "*.js"],
+        "Type": "Linux"
+    }
+}

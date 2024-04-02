@@ -23,16 +23,20 @@ npm i
 # Configuration
 You can customize the following constants at the beginning of the script according to your server setup:
 
-```javascript
-const ARTIFACT_FOLDER = __dirname;
-const FILTER = ["*.cfg", "*.cmd", "*.bat", "*.zip", "*.crt", "*.key", "resources", "cache", "*.tar.xz", "current-version", "*.json", "node_modules", "*.js"];
+```Json
+{
+    "Settings": {
+        "Filter": ["*.cfg", "*.cmd", "*.bat", "*.zip", "*.crt", "*.key", "resources", "cache", "*.tar.xz", "current-version", "*.json", "node_modules", "*.js"],
+        "Type": "Linux"
+    }
+}
 ```
-- ARTIFACT_FOLDER: The directory where the server artifacts and updates are stored.
-- FILTER: An array of file patterns to filter and remove old files.
+- Filter: An array of file patterns to filter and remove old files.
+- Type: write there what kind of system your server is running
 ## Usage
 1. Clone or download the script to your server.
 2. Install the required packages as mentioned in the prerequisites section.
-3. Customize the **ARTIFACT_FOLDER** and **FILTER** constants if necessary.
+3. Customize the **TYPE** and **FILTER** constants if necessary.
 4. Run the script using the following command:
 ```bash
 node index.js
