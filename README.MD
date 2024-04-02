@@ -18,7 +18,9 @@ Before running the script, make sure you have the following installed:
 You can install the required packages using the following command:
 
 ```bash
-npm i
+npm i 
+# or
+npm install axios fs-extra node-cron
 ```
 # Configuration
 You can customize the following constants at the beginning of the script according to your server setup:
