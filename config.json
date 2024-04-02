@@ -1,6 +1,9 @@
 {
     "Settings": {
         "Filter": ["*.cfg", "*.cmd", "*.bat", "*.zip", "*.crt", "*.key", "resources", "cache", "*.tar.xz", "current-version", "*.json", "node_modules", "*.js"],
-        "Type": "Linux"
+        "Type": "windows"
+    },
+    "Windows": {
+        "7zip": "C:\\Program Files\\7-Zip\\7z.exe"
     }
 }

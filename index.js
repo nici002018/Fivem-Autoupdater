@@ -29,11 +29,11 @@ async function getLatestRelease() {
         const hash = tagResponse.data.object.sha;
         let uri = "";
 
-        if (config.Settings.Type.toLowerCase === "linux") {
+        if (config.Settings.Type.toLowerCase() === "linux") {
             uri = `https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${version}-${hash}/fx.tar.xz`;
         }
 
-        if (config.Settings.Type.toLowerCase === "windows") {
+        if (config.Settings.Type.toLowerCase() === "windows") {
             uri = `https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/${version}-${hash}/server.7z`;
         }
 
@@ -80,7 +80,7 @@ async function updateServer() {
         try {
             await downloadFile(latestRelease.uri, dest);
             console.log("Removing old files");
-            await removeOldFiles(ARTIFACT_FOLDER, FILTER);
+            //await removeOldFiles(ARTIFACT_FOLDER, FILTER);
             console.log("Extracting new artifact");
             await extractArchive(dest, ARTIFACT_FOLDER);
             await fs.writeFile(path.join(ARTIFACT_FOLDER, "current-version"), latestRelease.version.toString());
@@ -96,7 +96,15 @@ async function updateServer() {
 
 async function extractArchive(src, dest) {
     try {
-        await execCommand(`tar -xJf "${src}" -C "${dest}"`);
+        if (config.Settings.Type.toLowerCase() === "windows") {
+            await execCommand(`"C:\\Program Files\\7-Zip\\7z.exe" x "${src}" -o"${dest}"`);
+            return;
+        }
+
+        if (config.Settings.Type.toLowerCase() === "linux") {
+            await execCommand(`tar -xJf "${src}" -C "${dest}"`);
+            return;
+        }
     } catch (error) {
         throw new Error(`Error extracting .tar.xz archive: ${error.message}`);
     }
