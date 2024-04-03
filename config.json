@@ -1,9 +1,9 @@
 {
     "Settings": {
-        "Filter": ["*.cfg", "*.cmd", "*.bat", "*.zip", "*.crt", "*.key", "resources", "cache", "*.tar.xz", "current-version", "*.json", "node_modules", "*.js"],
+        "Filter": ["*.cfg", "*.MD", "*.exe", "*.cmd", "*.bat", "*.zip", "*.crt", "*.key", "resources", "cache", "*.tar.xz", "current-version", "*.json", "node_modules", "*.js"],
         "Type": "windows"
     },
     "Windows": {
-        "7zip": "C:\\Program Files\\7-Zip\\7z.exe"
+        "zip": "C:\\Program Files\\7-Zip\\7z.exe"
     }
 }

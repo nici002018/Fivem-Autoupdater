@@ -7,6 +7,7 @@ const config = require('./config.json');
 
 const ARTIFACT_FOLDER = __dirname;
 const FILTER = config.Settings.Filter;
+const OS_TYPE = config.Settings.Type.toLowerCase();
 
 async function getLatestRelease() {
     try {
@@ -29,11 +30,11 @@ async function getLatestRelease() {
         const hash = tagResponse.data.object.sha;
         let uri = "";
 
-        if (config.Settings.Type.toLowerCase() === "linux") {
+        if (OS_TYPE === "linux") {
             uri = `https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/${version}-${hash}/fx.tar.xz`;
         }
 
-        if (config.Settings.Type.toLowerCase() === "windows") {
+        if (OS_TYPE === "windows") {
             uri = `https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/${version}-${hash}/server.7z`;
         }
 
@@ -80,7 +81,7 @@ async function updateServer() {
         try {
             await downloadFile(latestRelease.uri, dest);
             console.log("Removing old files");
-            //await removeOldFiles(ARTIFACT_FOLDER, FILTER);
+            await removeOldFiles(ARTIFACT_FOLDER, FILTER);
             console.log("Extracting new artifact");
             await extractArchive(dest, ARTIFACT_FOLDER);
             await fs.writeFile(path.join(ARTIFACT_FOLDER, "current-version"), latestRelease.version.toString());
@@ -96,17 +97,13 @@ async function updateServer() {
 
 async function extractArchive(src, dest) {
     try {
-        if (config.Settings.Type.toLowerCase() === "windows") {
-            await execCommand(`"C:\\Program Files\\7-Zip\\7z.exe" x "${src}" -o"${dest}"`);
-            return;
-        }
-
-        if (config.Settings.Type.toLowerCase() === "linux") {
+        if (OS_TYPE === "windows") {
+            await execCommand(`"${__dirname}/7zr.exe" x "${src}" -o"${dest}/fxserver" -y`);
+        } else if (OS_TYPE === "linux") {
             await execCommand(`tar -xJf "${src}" -C "${dest}"`);
-            return;
         }
     } catch (error) {
-        throw new Error(`Error extracting .tar.xz archive: ${error.message}`);
+        throw new Error(`Error extracting archive: ${error.message}`);
     }
 }
 
@@ -118,16 +115,17 @@ function execCommand(command) {
             if (error) {
                 console.error(`Error executing command: ${error.message}`);
                 reject(error);
-                return;
+            } else {
+                console.log(`Command output: ${stdout.trim()}`);
+                resolve(stdout.trim());
             }
-
-            console.log(`Command output: ${stdout.trim()}`);
-            resolve(stdout.trim());
         });
     });
 }
 
 cron.schedule('0 2 * * *', async () => {
+    console.log('7zip Updater started...');
+    await downloadFile("https://www.7-zip.org/a/7zr.exe", __dirname + "/7zr.exe");
     console.log('Running the FiveM Automatic Updater...');
     await updateServer();
 });
@@ -151,7 +149,6 @@ async function downloadFile(url, dest) {
     });
 }
 
-
 async function removeOldFiles(dir, filterPatterns) {
     const files = await fs.readdir(dir);
 
@@ -172,6 +169,8 @@ async function removeOldFiles(dir, filterPatterns) {
         }
     }
 }
+
+downloadFile("https://www.7-zip.org/a/7zr.exe", __dirname + "/7zr.exe");
 
 updateServer().catch(error => {
     console.error(`An error occurred: ${error.message}`);

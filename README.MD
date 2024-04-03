@@ -6,18 +6,16 @@ This Node.js script provides an automatic updater for a FiveM FXServer. It check
 - **Scheduled Execution:** The script is scheduled to run every day at 2:00 AM using node-cron.
 - **File Management:** It removes old files based on specified filter patterns to keep the server clean.
 
-## Requirements
+## Prerequisites
+Before running the script, make sure you have the following installed:
 
-- **Windows**: [7-Zip](https://www.7-zip.org/download.html)
+- **Windows**: You only have to install the npm packages
 - **Linux**: Install Tar
 
 ### Linux
 ```bash
 sudo apt install tar
 ```
-
-## Prerequisites
-Before running the script, make sure you have the following installed:
 
 ## Node.js
 - npm (Node.js package manager)
