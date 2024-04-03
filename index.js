@@ -168,7 +168,9 @@ async function removeOldFiles(dir, filterPatterns) {
     }
 }
 
-downloadFile("https://www.7-zip.org/a/7zr.exe", __dirname + "/7zr.exe");
+if (OS_TYPE === "windows") {
+    downloadFile("https://www.7-zip.org/a/7zr.exe", __dirname + "/7zr.exe");
+}
 
 updateServer().catch(error => {
     console.error(`An error occurred: ${error.message}`);
