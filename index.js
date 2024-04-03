@@ -6,7 +6,6 @@ const { exec } = require('child_process');
 const config = require('./config.json');
 
 const ARTIFACT_FOLDER = __dirname;
-const FILTER = config.Settings.Filter;
 const OS_TYPE = config.Settings.Type.toLowerCase();
 
 async function getLatestRelease() {
@@ -80,8 +79,6 @@ async function updateServer() {
 
         try {
             await downloadFile(latestRelease.uri, dest);
-            console.log("Removing old files");
-            await removeOldFiles(ARTIFACT_FOLDER, FILTER);
             console.log("Extracting new artifact");
             await extractArchive(dest, ARTIFACT_FOLDER);
             await fs.writeFile(path.join(ARTIFACT_FOLDER, "current-version"), latestRelease.version.toString());
@@ -145,27 +142,6 @@ async function downloadFile(url, dest) {
         writer.on('finish', resolve);
         writer.on('error', reject);
     });
-}
-
-async function removeOldFiles(dir, filterPatterns) {
-    const files = await fs.readdir(dir);
-
-    for (const file of files) {
-        const filePath = path.join(dir, file);
-        const stat = await fs.stat(filePath);
-
-        if (stat.isDirectory()) {
-            await removeOldFiles(filePath, filterPatterns);
-        } else {
-            if (!filterPatterns.some(pattern => {
-                const regex = new RegExp(pattern.replace(/\*/g, '.*'));
-                return regex.test(filePath);
-            })) {
-                console.log(`Removing old file: ${filePath}`);
-                await fs.unlink(filePath);
-            }
-        }
-    }
 }
 
 if (OS_TYPE === "windows") {
