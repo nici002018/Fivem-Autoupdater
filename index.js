@@ -124,8 +124,6 @@ function execCommand(command) {
 }
 
 cron.schedule('0 2 * * *', async () => {
-    console.log('7zip Updater started...');
-    await downloadFile("https://www.7-zip.org/a/7zr.exe", __dirname + "/7zr.exe");
     console.log('Running the FiveM Automatic Updater...');
     await updateServer();
 });
