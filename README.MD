@@ -1,10 +1,9 @@
 # FiveM Automatic Updater
-This Node.js script provides an automatic updater for a FiveM FXServer. It checks for the latest release of FiveM, downloads the update if a new version is available, and updates the server accordingly. Additionally, it removes old files based on specified filter patterns.
+This Node.js script provides an automatic updater for a FiveM FXServer. It checks for the latest release of FiveM, downloads the update if a new version is available, and updates the server accordingly.
 
 ## Features
 - **Automatic Update:** The script automatically checks for the latest FiveM release and updates the server if a new version is available.
 - **Scheduled Execution:** The script is scheduled to run every day at 2:00 AM using node-cron.
-- **File Management:** It removes old files based on specified filter patterns to keep the server clean.
 
 ## Prerequisites
 Before running the script, make sure you have the following installed:
@@ -36,7 +35,6 @@ You can customize the following constants at the beginning of the script accordi
 ```Json
 {
     "Settings": {
-        "Filter": ["*.cfg", "*.cmd", "*.bat", "*.zip", "*.crt", "*.key", "resources", "cache", "*.tar.xz", "current-version", "*.json", "node_modules", "*.js"],
         "Type": "Linux"
     }
 }
@@ -47,7 +45,7 @@ You can customize the following constants at the beginning of the script accordi
 ## Usage
 1. Clone or download the script to your server.
 2. Install the required packages as mentioned in the prerequisites section.
-3. Customize the **TYPE** and **FILTER** constants if necessary.
+3. Customize the **TYPE** constants if necessary.
 4. Run the script using the following command:
 ```bash
 node index.js
